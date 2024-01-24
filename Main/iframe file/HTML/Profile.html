@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analysis</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="../CSS/all.min.css">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="../CSS/adminlte.min.css">
+  <link rel="stylesheet" type="text/css" href="../CSS/chart.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../lib/chart.min.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+
+  <div class="wrapper">
+    <div class="wrapper">
+      <section class="content" style="position: relative; align-items: center;">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+  
+            <div class="col-lg-3 col-6" style="display: inline-block; margin-right: 10px;">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3 id="totalAddedCard">3</h3>
+                  <p id="totalAddedCardText">Total Added Card</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-card"></i>
+                </div>
+                <a href="#" class="small-box-footer" id="moreInfoText1">More info <!--<i class="fas fa-arrow-circle-right"></i>--></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-6" style="display: inline-block; margin-right: 10px;">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>92%</h3>
+                  <p id="reliabilityRateText">Reliability Rate of the Sites You Visit</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer" id="moreInfoText2">More info <!--<i class="fas fa-arrow-circle-right"></i>--></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-6" style="display: inline-block; margin-right: 10px;">
+              <!-- small box -->
+              <div class="small-box badge-secondary">
+                <div class="inner">
+                  <h3 id="totalSites">14</h3>
+                  <p id="totalSitesText">Total Number of Sites You Shop From</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer" id="moreInfoText3">More info <!--<i class="fas fa-arrow-circle-right"></i>--></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-6" style="display: inline-block;">
+              <!-- small box -->
+              <div class="small-box bg-gradient-indigo">
+                <div class="inner">
+                  <h3 id="protectedDays">234</h3>
+                  <p id="protectedDaysText">How Many Days Have You Been Protected</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-calendar"></i>
+                </div>
+                <a href="#" class="small-box-footer" id="moreInfoText4">More info <!--<i class="fas fa-arrow-circle-right"></i>--></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content" style="display: flex; justify-content: center;">
+        <div class="widget">
+          <canvas id="revenues" style="width: 100%;" ></canvas>
+        </div>
+      </section>
+      <script src="../../JS/Translate.js"></script>
+    <script src="../JS/chart.js"></script>
+  </div>
+</body>
+
+</html>

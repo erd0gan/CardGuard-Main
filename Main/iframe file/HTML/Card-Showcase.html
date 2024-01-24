@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval';">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flipping Card UI Design</title>
+  <link rel="stylesheet" href="../CSS/Card-Showcase.css" />
+  <link rel="stylesheet" href="../CSS/Password.css">
+</head>
+<body>
+  <section>
+    <div id="app">
+      <div class="container">
+        <div v-if="activeCard" class="card-container">
+          <div class="card" :class="[ 'front-face', getCardType(activeCard), {'flipped': activeCard.flipped} ]" @click="flipCard(activeCard, $event)" :style="{ transform: 'rotateY(' + activeCard.rotateY + 'deg)' }">
+            <header>
+              <img src="../../images/chip.png" alt="" class="chip" />
+              <span class="logo">
+                <img :src="getCardLogo(activeCard)" alt="" />
+              </span>
+            </header>
+            
+            <div class="card-details">
+              <div class="name-number">
+                <h6 id="cardNumber">Card Number</h6>
+                <h5 class="number" v-if="!activeCard.showFullNumber" @click="copyToClipboard(activeCard.cardNumber)">{{ formatCardNumber(activeCard.cardNumber) }}</h5>
+                <h5 class="number" v-else>{{ activeCard.cardNumber }}</h5>
+                
+                <h6 class="holder" id="cardHolder">Card Holder</h6>
+                <h5 class="name" @click="copyToClipboard(activeCard.cardName, $event)">{{ activeCard.cardName }}</h5>
+              </div>
+              <div class="valid-date">
+                <h6 id="expiryDate">Expiry Date</h6>
+                <h5 @click="copyToClipboard(`${activeCard.cardMonth}/${activeCard.cardYear}`, $event)">{{ activeCard.cardMonth }}/{{ activeCard.cardYear }}</h5>
+              </div>
+            </div>
+            <div class="button-container">
+              <button class="card-form__button" @click="toggleFullNumber(activeCard)" id="showNumber">Show Full Number</button>
+              <button class="card-form__button" @click="cardDetails(activeCard)" id="addCard">Add Card</button>
+            </div>
+          </div>
+          <div class="card back-face" :class="[ 'back-face', getCardType(activeCard), {'flipped': activeCard.flipped} ]" @click="flipCard(activeCard, $event)" :style="{ transform: 'rotateY(' + (activeCard.rotateY + 180) + 'deg)' }">
+            <span class="magnetic-strip"></span>
+            <div class="CVV" @click="copyToClipboard(activeCard.cardCvv, $event)"><i>{{ activeCard.cardCvv }}</i></div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <div class="arrow left" @click="showPreviousCard" style="cursor: pointer;">&#9665;</div>
+        <div class="arrow right" @click="showNextCard" style="cursor: pointer;">&#9655;</div>
+      </div>
+      <div class="centering">
+        <div class="box">
+          <div class="input__wrapper">
+                <input
+                id="keyInput"
+                :type="showPassword ? 'text' : 'password'"
+                name="key_input"
+                placeholder="Your Password"
+                title="Minimum 6 characters at least 1 Alphabet and 1 Number"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+                required
+                class="input__field"
+              >
+              <label
+                  for="key_input"
+                  class="input__label"
+                  id="passwordLabel"
+              >
+                  Password
+              </label>
+              <img
+                alt="Eye Icon"
+                title="Eye Icon"
+                src="../../images/eye.svg"
+                class="input__icon"
+                @click="togglePassword"
+              >
+              
+          </div>
+            <button class="card-form__button1" id="getCardDetails" @click="getCardDetails" info="">Get Card Details</button>
+            
+        </div>
+        
+    </div>
+  </section>
+  <script src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script src="../../lib/crypto-js.js"></script>
+
+  <script src="../JS/Password.js"></script>
+  <script src="../JS/algorithm.js"></script>
+  <script src="../JS/Card.js"></script>
+  <script src="../../JS/Translate.js"></script>
+
+  <!-- Add this to the end of your <body> -->
+<div id="copyPopup" class="notification">
+  <div class="notification__body">
+    <div class="notification__description" id="info">
+      <div class="icon__wrapper">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M5 12l5 5l10 -10"></path>
+        </svg>
+        Kart Bilgisi Panoya kopyalandı!
+      </div>                    
+      
+    </div> 
+  </div>
+</div>
+
+</body>
+</html>

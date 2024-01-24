@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>FAQ</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+            rel="stylesheet"
+            type='text/css'
+        >
+        <link rel="stylesheet" type="text/css" href="../CSS/SSS.css">
+    </head>
+    <body>
+      <div class="container">
+        <div style="color: white;" class="container-top-ten">
+        </div>
+        <div class="faq-container">
+          <details>
+            
+            <summary>
+              <span class="faq-title" id="title1">
+                  How do you ensure the security of the cards?
+              </span>
+              <img src="assets/plus.svg" class="expand-icon" alt="Plus">
+            </summary>        
+            <div class="faq-content" id="content1">
+              Thanks to the AES encryption technique, you have a unique key defined to your internal password that encrypts your cards and is almost impossible to crack without your password!
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="faq-title" id="title2">
+                  How do you detect malicious sites?
+              </span>
+              <img src="assets/plus.svg" class="expand-icon" alt="Plus">
+            </summary>        
+            <div class="faq-content" id="content2">
+              Malicious sites are detected by an artificial intelligence that we have trained. Our AI has been exposed to safe and malicious sites on certain criteria so that it can easily tell the difference between them.          </div>
+          </details>
+          <details>
+            <summary>
+              <span class="faq-title" id="title3">
+                  Does the extension have access to any of our data?
+              </span>
+              <img src="./assets/plus.svg" class="expand-icon" alt="Plus">
+            </summary>        
+            <div class="faq-content" id="content3">
+              No, the extension saves the information you enter to local storage on your device that only you can access, so none of your information is shared on the internet stream.        </div>
+          </details>
+          <details>
+            <summary>
+              <span class="faq-title" id="title4">
+                Does it provide full protection of my credit card?
+              </span>
+              <img src="./assets/plus.svg" class="expand-icon" alt="Plus">
+            </summary>        
+            <div class="faq-content" id="content4">We can say that your credit card will be more secure if you use the add-on, but no one can guarantee full protection!.</div>
+          </details>
+          <details>
+            <summary>
+              <span class="faq-title" id="title5">Where does your data come from?</span>
+              <img src="./assets/plus.svg" class="expand-icon" alt="Plus">
+            </summary>        
+            <div class="faq-content" id="content5">It comes from multiple data sources, like antivirus services, which are big data sources, and our AI processes it.</div>
+          </details>
+        </div>
+      <br/>
+      <br/>
+      <div class="navigation">
+        <ul>
+          <li class="list">
+            <a href="../HTML/Home.html">
+              <span class="icon">
+                <ion-icon name="home-outline"></ion-icon>
+              </span>
+            </a>
+          </li>
+          <li class="list">
+            <a href="../HTML/Cards.html">
+              <span class="icon">
+                <ion-icon name="card-outline"></ion-icon>
+              </span>
+            </a>
+          </li>
+          <li class="list">
+            <a href="../HTML/Sites.html">
+              <span class="icon">
+                <ion-icon name="bookmark-outline"></ion-icon>
+              </span>
+            </a>
+          </li>
+          <li class="list">
+            <a href="../HTML/Profile.html">
+              <span class="icon">
+                <ion-icon name="person-outline"></ion-icon>
+              </span>
+            </a>
+          </li>
+          <li class="list active">
+            <a href="../HTML/Settings.html">
+              <span class="icon">
+                <ion-icon name="settings-outline"></ion-icon>
+              </span>
+            </a>
+          </li>
+          <div class="indicator"><span></span></div>
+        </ul>
+      </div>
+      <script src='../lib/ionicons-7.1.2/dist/ionicons/ionicons.js'></script>
+            <script src="../JS/SSS.js"></script>
+    </body>
+    <script>
+      // Check if a language is stored in localStorage
+      var storedLanguage = localStorage.getItem('selectedLanguage');
+  
+      // If a language is stored, apply it
+      if (storedLanguage) {
+        
+        changeLanguage(storedLanguage);
+      }
+  
+      function changeLanguage(lang) {
+        var langtext = {
+        'tr': {
+          'title1': 'Kartların güvenliğini nasıl sağlıyorsunuz?',
+          'content1': 'AES şifreleme tekniği sayesinde, kartlarınıza tanımlanmış olan benzersiz bir anahtar, kartlarınızı şifreler ve sizin şifreniz olmadan kırılması neredeyse imkansızdır!',
+          'title2': 'Zararlı siteleri nasıl tespit ediyorsunuz?',
+          'content2': 'Zararlı siteleri, eğittiğimiz bir yapay zeka tarafından tespit edilir. Yapay zekamız, belirli kriterlere göre güvenli ve zararlı sitelere maruz kaldığı için bunlar arasındaki farkı kolayca anlayabilir.',
+          'title3': 'Uzantının verilerimize erişimi var mı?',
+          'content3': 'Hayır, uzantı girdiğiniz bilgileri yalnızca sizin erişebileceğiniz cihazınızın yerel depolama alanına kaydeder, bu nedenle bilgileriniz internet akışında paylaşılmaz.',
+          'title4': 'Kredi kartımı tam koruma sağlar mı?',
+          'content4': 'Eklemeyi kullandığınızda kredi kartınızın daha güvende olacağını söyleyebiliriz, ancak kimse tam koruma garanti edemez!',
+          'title5': 'Verileriniz nereden geliyor?',
+          'content5': 'Veriler, antivirüs hizmetleri gibi birçok veri kaynağından gelir ve yapay zekamız bunu işler.'
+        },
+        'en': {
+          'title1': 'How do you ensure the security of the cards?',
+          'content1': 'Thanks to the AES encryption technique, you have a unique key defined to your internal password that encrypts your cards and is almost impossible to crack without your password!',
+          'title2': 'How do you detect malicious sites?',
+          'content2': 'Malicious sites are detected by an artificial intelligence that we have trained. Our AI has been exposed to safe and malicious sites on certain criteria so that it can easily tell the difference between them.',
+          'title3': 'Does the extension have access to any of our data?',
+          'content3': 'No, the extension saves the information you enter to local storage on your device that only you can access, so none of your information is shared on the internet stream.',
+          'title4': 'Does it provide full protection of my credit card?',
+          'content4': 'We can say that your credit card will be more secure if you use the add-on, but no one can guarantee full protection!',
+          'title5': 'Where does your data come from?',
+          'content5': 'It comes from multiple data sources, like antivirus services, which are big data sources, and our AI processes it.'
+        }}
+      
+        // Metinleri yerine koy
+        for (var key in langtext[lang]) {
+          if (langtext[lang].hasOwnProperty(key)) {
+            var element = document.getElementById(key);
+            if (element) {
+              element.textContent = langtext[lang][key];
+            }
+          }
+        }
+      }
+      
+      </script>
+</html>

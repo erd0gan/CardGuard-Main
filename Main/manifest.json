@@ -1,0 +1,37 @@
+{
+    "manifest_version": 2,
+    "name": "CardGuard",
+    "version": "1.1.0",
+    "description": "Online Alışverişlerde Yüksek Güvenlik - Kart Şifreleme ve Yapay Zekâlı Site Kontrolü",
+    "browser_action": {
+      "default_popup": "HTML/Home.html",
+      "default_icon": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+      }
+    },
+    "icons": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "permissions": [
+      "activeTab",
+      "tabs",
+      "storage",
+      "webRequest",
+      "http://*/",
+      "https://*/",
+      "<all_urls>"
+    ], 
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["JS/Home.js"],
+        "html": ["HTML/Home.html"]
+      }
+    ]
+  }
+  

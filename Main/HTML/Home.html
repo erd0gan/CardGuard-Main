@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans"
+      rel="stylesheet"
+      type='text/css'
+  >
+  <link rel="stylesheet" type="text/css" href="../CSS/Home.css">
+</head>
+<body>
+
+  <!-- Content Section -->
+  <div class="container">
+    <div style="color: white;" class="container-top-ten">
+    </div>
+  <h1 id="guardTitle" style="color: white;">CardGuard</h1>
+
+  <p id="currentDomain" style="color: white;"></p>
+
+  <div class="image-container" onclick="changeImage()">
+    <div class="chamber-container">
+      <img id="guardImage" src="../images/inactive-log.webp" style="width: 150px;">
+    </div>
+    <p id="activateGuardText" class="activation-text typewriter" style="color: white; font-family: Arial, Helvetica, sans-serif;">Site Scanning</p>
+  </div>
+  <p id="domainDataText" style="color: white;"></p>
+  <p id="reportText" class="activation-text typewriter" style="color: white; font-family: Arial, Helvetica, sans-serif; font-size: 15px;">Report any unrecognized or unauthorized transactions.</p>
+  <p id="reportText1" class="activation-text typewriter" style="color: white; font-family: Arial, Helvetica, sans-serif; font-size: 15px; margin-top: 10px"> on your credit card statement immediately.</p>
+  <!-- Navigation Bar -->
+  <div class="navigation">
+    <ul>
+      <li class="list active">
+        <a href="../HTML/Home.html">
+          <span class="icon">
+            <ion-icon name="home-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="../HTML/Cards.html">
+          <span class="icon">
+            <ion-icon name="card-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="../HTML/Sites.html">
+          <span class="icon">
+            <ion-icon name="bookmark-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="../HTML/Profile.html">
+          <span class="icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <li class="list">
+        <a href="../HTML/Settings.html">
+          <span class="icon">
+            <ion-icon name="settings-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      <div class="indicator"><span></span></div>
+    </ul>
+  </div>
+  <!-- partial -->
+  <script src='../lib/ionicons-7.1.2/dist/ionicons/ionicons.js'></script>
+  <script src="../JS/Home.js"></script>
+  <script src="../JS/Translate.js"></script>
+</body>
+</html>

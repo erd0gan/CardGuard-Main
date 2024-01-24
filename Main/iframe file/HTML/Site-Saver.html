@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../CSS/Site-Saver.css">
+</head>
+<body>
+
+  <div class="container">
+    <!-- Display Site Records -->
+    <h1 style="font-size: 20px; margin-top: -8px;margin-bottom: -10px;">Site Records</h1>
+    <div id="siteList" class="site-list"></div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button onclick="changePage(-1)"><a style="color:white" id="previousText">Previous</a></button>
+      <span id="currentPage" style="color:white">1</span>
+      <button onclick="changePage(1)"><a style="color:white" id="nextText">Next</a></button>
+    </div>
+
+    <!-- Save and Delete Buttons -->
+    <div class="buttons">
+      <button onclick="saveSite()"><a style="color:white" id="saveSiteText">Save Current Site</a></button>
+      <button onclick="deleteAll()"><a style="color:white" id="deleteAllText">Delete All</a></button>
+    </div>
+  </div>
+
+  <script src="../../JS/Translate.js"></script>
+  <script src="../JS/Site-Saver.js"></script>
+</body>
+</html>

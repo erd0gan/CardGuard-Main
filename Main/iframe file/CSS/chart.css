@@ -1,0 +1,35 @@
+:root {
+    --background: #222;
+    --background-widget: #222;
+    --primary: #F6C356;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--background);
+    height: 100vh;
+    align-items: center;
+}
+
+.widget {
+    border-radius: 32px;
+    background-color: var(--background-widget);
+    padding: 16px;
+    max-width: 600px;
+    width: 100%;
+    min-width: 300px;
+}
+
+.widget canvas {
+    min-height: 280px;
+}
