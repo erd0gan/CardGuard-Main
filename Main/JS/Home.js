@@ -1,64 +1,71 @@
 // Resim ve metin değişiklikleri için bir fonksiyon
 function changeImage(currentUrl) {
-    // Resim ve metin elementlerini alma
-    var imageElement = document.getElementById('guardImage');
-    var activationText = document.querySelector('.activation-text');
+  // Resim ve metin elementlerini alma
+  var imageElement = document.getElementById('guardImage');
+  var activationText = document.querySelector('.activation-text');
 
-    if (imageElement && activationText) {
-        var currentImage = imageElement.src;
-    
-        // URL yapısını kullanarak protokolü alma
-        var protocol = new URL(currentUrl).protocol;
-    
-        // // HTTPS protokolü için işlemler
-        // if (protocol === 'https:') {
-        //     if (currentImage.endsWith('inactive-log.webp')) {
-        //         imageElement.src = '../images/safe-log.webp';
-        //         activationText.textContent = "Ziyaret ettiğiniz site güvenli!";
-        //     } else if (currentImage.endsWith('safe-log.webp')) {
-        //         imageElement.src = '../images/inactive-log.webp';
-        //         activationText.textContent = "Korumayı etkinleştirmek için kalkanı tıklayın.";
-        //     }
-        // } else {
-        //     // HTTP protokolü için farklı bir logo ayarlama
-        //     if (currentImage.endsWith('inactive-log.webp')) {
-        //         imageElement.src = '../images/malicious-log.webp';
-        //         activationText.textContent = "Bu site tehlikeli olabilir.";
-        //     } else if (currentImage.endsWith('malicious-log.webp')) {
-        //         imageElement.src = '../images/inactive-log.webp';
-        //         activationText.textContent = "Korumayı etkinleştirmek için kalkanı tıklayın.";
-        //     }
-        // }
-    
-        // Aktivasyon metnine 'typewriter' sınıfını ekleme
-        activationText.classList.add('typewriter');
-    
-        // Animasyon tamamlandıktan sonra 'typewriter' sınıfını kaldırma
-        setTimeout(function () {
-            activationText.classList.remove('typewriter');
-        }, 1000);
-    } else {
-        console.error("Image element or activation text not found.");
-    }
+  if (imageElement && activationText) {
+      var currentImage = imageElement.src;
+  
+      // URL yapısını kullanarak protokolü alma
+      var protocol = new URL(currentUrl).protocol;
+  
+      // // HTTPS protokolü için işlemler
+      // if (protocol === 'https:') {
+      //     if (currentImage.endsWith('inactive-log.webp')) {
+      //         imageElement.src = '../images/safe-log.webp';
+      //         activationText.textContent = "Ziyaret ettiğiniz site güvenli!";
+      //     } else if (currentImage.endsWith('safe-log.webp')) {
+      //         imageElement.src = '../images/inactive-log.webp';
+      //         activationText.textContent = "Korumayı etkinleştirmek için kalkanı tıklayın.";
+      //     }
+      // } else {
+      //     // HTTP protokolü için farklı bir logo ayarlama
+      //     if (currentImage.endsWith('inactive-log.webp')) {
+      //         imageElement.src = '../images/malicious-log.webp';
+      //         activationText.textContent = "Bu site tehlikeli olabilir.";
+      //     } else if (currentImage.endsWith('malicious-log.webp')) {
+      //         imageElement.src = '../images/inactive-log.webp';
+      //         activationText.textContent = "Korumayı etkinleştirmek için kalkanı tıklayın.";
+      //     }
+      // }
+  
+      // Aktivasyon metnine 'typewriter' sınıfını ekleme
+      activationText.classList.add('typewriter');
+  
+      // Animasyon tamamlandıktan sonra 'typewriter' sınıfını kaldırma
+      setTimeout(function () {
+          activationText.classList.remove('typewriter');
+      }, 1000);
+  } else {
+      console.error("Image element or activation text not found.");
+  }
 }
 
 
 // Geçerli alan adını güncelleme fonksiyonu
-function updateCurrentDomain(currentUrl) {
-    // Protokol ve alan adını alma
-    var urlObject = new URL(currentUrl);
-    var protocol = urlObject.protocol;
-    var domain = urlObject.hostname;
-  
-    // Uyarı metni elementini seçme ve font stilini ayarlama
-    var warningText = document.querySelector('.activation-text');
-    warningText.style.fontFamily = 'Open Sans, sans-serif';
-  
-    // Kombine protokol ve alan adını belirtilen elementte gösterme
-    var currentDomainElement = document.getElementById('currentDomain');
-    currentDomainElement.textContent = domain;
-    currentDomainElement.style.color = (protocol === 'http:') ? 'red' : 'green';
+function updateCurrentDomain(domainResultData) {
+  // Protokol ve alan adını alma
+  var urlObject = new URL(currentUrl);
+  var protocol = urlObject.protocol;
+  var domain = urlObject.hostname;
+
+  // Uyarı metni elementini seçme ve font stilini ayarlama
+  var warningText = document.querySelector('.activation-text');
+  warningText.style.fontFamily = 'Open Sans, sans-serif';
+
+  // Kombine protokol ve alan adını belirtilen elementte gösterme
+  var currentDomainElement = document.getElementById('currentDomain');
+  currentDomainElement.textContent = domain;
+
+  // DomainResultData içinde "not" bulunuyorsa rengi kırmızı yap, aksi halde yeşil yap
+  if (domainResultData.includes("not")) {
+    currentDomainElement.style.color = 'red';
+  } else {
+    currentDomainElement.style.color = 'green';
   }
+}
+
   
 
 // İstek gönderme fonksiyonu
@@ -75,15 +82,15 @@ function sendRequests(targetUrl) {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       var response = JSON.parse(xhr.responseText);
-      var resultData = response.ai_data_result;
+      var reliabilityResultData = response.ai_data_result;
 
       // Algılama sonuçları için düzenli ifadeler
       var securityPattern = /security is ([^.]+)/;
       var reliabilityPattern = /(\d\d|\d)%/;
 
       // Düzenli ifadelerle eşleşmeyi kontrol etme
-      var securityMatch = resultData.match(securityPattern);
-      var reliabilityMatch = resultData.match(reliabilityPattern);
+      var securityMatch = reliabilityResultData.match(securityPattern);
+      var reliabilityMatch = reliabilityResultData.match(reliabilityPattern);
 
       // Eğer eşleşme varsa, mesajı oluşturma
       if (securityMatch && reliabilityMatch) {
@@ -91,7 +98,8 @@ function sendRequests(targetUrl) {
         var reliabilityRate = reliabilityMatch[1];
 
         var activationText = document.querySelector('.activation-text');
-        activationText.textContent = "Ziyaret ettiğiniz site " + securityType + " ve güvenilirlik oranı " + reliabilityRate + "%.";
+        activationText.innerHTML = "Gezindiğiniz site " + securityType + "!<br> Güvenilirlik oranı: %" + reliabilityRate + ".";
+
 
         // Logo değiştirme işlemi
         var imageElement = document.getElementById('guardImage');
@@ -114,7 +122,9 @@ function sendRequests(targetUrl) {
       }
 
       // Domain sonuçlarıyla ilgili işlemler burada devam edebilir
-      var domainData = response.ai_domain_result;
+      var domainResultData = response.ai_domain_result;
+      updateCurrentDomain(domainResultData)
+
     }
   };
 

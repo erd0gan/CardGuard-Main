@@ -11,6 +11,7 @@ import tensorflow as tf
 import pandas as pd
 import google.generativeai as genai
 import json
+import os
 
 requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -418,6 +419,7 @@ def get_csv_version(data):
 
 # Elde edilen verileri Gemini için uygun formata getiren fonksiyon
 def get_csv_version_for_gemini(data):
+    print(data)
     df = pd.DataFrame({
         'url': [data['url']],
         'domain': [data['domain']],
@@ -464,10 +466,6 @@ def get_csv_version_for_gemini(data):
         'apivoid_results_ecommerce_platform_is_prestashop': [int(data['apivoid_results']['detail']['ecommerce_platform']['is_prestashop'])],
         'apivoid_results_ecommerce_platform_is_magento': [int(data['apivoid_results']['detail']['ecommerce_platform']['is_magento'])],
         'apivoid_results_ecommerce_platform_is_zencart': [int(data['apivoid_results']['detail']['ecommerce_platform']['is_zencart'])],
-        'apivoid_results_ecommerce_platform_is_shoplazza': [int(data['apivoid_results']['detail']['ecommerce_platform']['is_shoplazza'])],
-        'apivoid_results_ecommerce_platform_is_shopyy': [int(data['apivoid_results']['detail']['ecommerce_platform']['is_shopyy'])],
-        'apivoid_results_ecommerce_platform_is_youcanshop': [int(data['apivoid_results']['detail']['ecommerce_platform']['is_youcanshop'])],
-        'apivoid_results_ecommerce_platform_is_ueeshop': [int(data['apivoid_results']['detail']['ecommerce_platform']['is_ueeshop'])],
         'apivoid_results_ecommerce_platform_is_other': [int(data['apivoid_results']['detail']['ecommerce_platform']['is_other'])],
         'apivoid_results_security_checks_is_suspended_site': [int(data['apivoid_results']['detail']['security_checks']['is_suspended_site'])],
         'apivoid_results_security_checks_is_most_abused_tld': [int(data['apivoid_results']['detail']['security_checks']['is_most_abused_tld'])],
@@ -547,7 +545,7 @@ def get_knn_result(df):
 
 # Tüm verilerin Gemini ortamında Güvenilirlik Yüzdesinin hesaplanmasını sağlayan fonksiyon
 def get_gemini_result(data, ge_key):
-
+    # Gemini'nin ayarlamaları yapılır.
     genai.configure(api_key=ge_key)
 
     # Gemini'nin yanıt verme ayarları yapılır.
@@ -591,12 +589,12 @@ def get_gemini_result(data, ge_key):
     print('Gemini Processsing...')
     response = model.generate_content(prompt_parts)
     print('Gemini Processed!')
-    print(response.text)
+
     return response.text
 
 # Sadece domaine bakılarak Gemini ortamında o domainin güvenli olup olmadığına bakan fonksiyon
 def get_gemini_result_for_domain(url, ge_key):
-
+    # Gemini'nin ayarlamaları yapılır.
     genai.configure(api_key=ge_key)
 
     # Gemini'nin yanıt verme ayarları yapılır.
@@ -640,7 +638,7 @@ def get_gemini_result_for_domain(url, ge_key):
     return response.text
 
 
-
+# Account-1: eserdar242@gmail.com:P4ssw@rd | adambecker006@proton.me:P4ssw@rd123456.
 
 
 def start(target_url):
@@ -715,6 +713,8 @@ def start(target_url):
     # Sonuçları bir sözlük içinde döndür
     return {'ai_data_result': ai_result, 'ai_domain_result': ai_domain_result}
 
+
+
 print('Configuring Server...')
 # Flask uygulamasını oluştur
 app = Flask(__name__)
@@ -742,3 +742,4 @@ def main():
 # Uygulamayı başlat
 if __name__ == '__main__':
     app.run(debug=True)
+

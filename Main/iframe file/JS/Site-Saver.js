@@ -1,3 +1,12 @@
+
+function getActiveTabUrl(callback) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      var activeTab = tabs[0];
+      var tabUrl = activeTab.url;
+      callback(tabUrl);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   // Sayfa yüklenirken mevcut sayfa ve site kayıtlarını başlat
   let currentPage = 1;
@@ -8,35 +17,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Geçerli site domainini kaydetme işlevi
   window.saveSite = function () {
-    const siteUrl = window.location.href;
-    const siteDomain = getDomainFromUrl(siteUrl);
+    getActiveTabUrl(function(tabUrl) {
+      const siteDomain = getDomainFromUrl(tabUrl);
+      console.log(siteDomain)
+      console.log('Current Site: ' + siteDomain)
 
-    // Local storage'dan mevcut kayıtları al veya boş bir dizi başlat
-    const records = JSON.parse(localStorage.getItem('siteRecords')) || [];
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      console.log('tabParam: ' + tabParam)
+      // Local storage'dan mevcut kayıtları al veya boş bir dizi başlat
+      const records = JSON.parse(localStorage.getItem('siteRecords_' + tabParam)) || [];
 
-    // Alan adının zaten kaydedilip kaydedilmediğini kontrol etmeden önce ekleyin
-    if (!records.some(record => record.domain === siteDomain)) {
-      // Yeni site kaydını ekle
-      records.push({ domain: siteDomain });
-    }
+      // Alan adının zaten kaydedilip kaydedilmediğini kontrol etmeden önce ekleyin
+      if (!records.some(record => record.domain === siteDomain)) {
+        // Yeni site kaydını ekle
+        records.push({ domain: siteDomain });
+      }
 
-    // Kayıtları local storage'a kaydet
-    localStorage.setItem('siteRecords', JSON.stringify(records));
+      // Kayıtları local storage'a kaydet
+      localStorage.setItem('siteRecords_' + tabParam, JSON.stringify(records));
 
-    // Site kayıtlarını yeniden yükle
-    loadSiteRecords();
-  };
+      // Site kayıtlarını yeniden yükle
+      loadSiteRecords();
+})};
 
   // URL'den domaini çıkarmak için işlev
   function getDomainFromUrl(url) {
     const urlObject = new URL(url);
+    console.log(urlObject)
     return urlObject.hostname;
   }
 
   // Tüm site kayıtlarını silme işlevi
   window.deleteAll = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
     // Local storage'dan tüm site kayıtlarını temizle
-    localStorage.removeItem('siteRecords');
+    localStorage.removeItem('siteRecords_' + tabParam);
 
     // Site kayıtlarını yeniden yükle
     loadSiteRecords();
@@ -44,8 +61,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Site kayıtlarını yükleme ve görüntüleme işlevi
   function loadSiteRecords() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+
     const siteList = document.getElementById('siteList');
-    const records = JSON.parse(localStorage.getItem('siteRecords')) || [];
+    const records = JSON.parse(localStorage.getItem('siteRecords_' + tabParam)) || [];
 
     // Geçerli sayfaya dayalı olarak başlangıç ​​ve bitiş indeksini hesapla
     const startIndex = (currentPage - 1) * 5;
@@ -72,28 +92,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Örnek siteleri eklemek için işlev
   function addSampleSites() {
-    const sampleSites = [
-      'https://pttavm.com',
-      'https://play.google.com',
-      'https://tubitak.gov.tr',
-      'https://trthaber.com',
-      'https://turkiye.gov.tr'
-    ];
+    // const sampleSites = [
+    //   'https://google.com',
+    //   'https://pttavm.com',
+    //   'https://tubitak.gov.tr',
+    //   'https://trthaber.com',
+    //   'https://turkiye.gov.tr',
+    //   'https://web.whatsapp.com',
+    // ];
 
-    const records = JSON.parse(localStorage.getItem('siteRecords')) || [];
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    const records = JSON.parse(localStorage.getItem('siteRecords_' + tabParam)) || [];
 
     // Örnek siteleri zaten kaydedilmediyse ekleyin
-    sampleSites.forEach(siteUrl => {
-      const siteDomain = getDomainFromUrl(siteUrl);
-      if (!records.some(record => record.domain === siteDomain)) {
-        records.push({ domain: siteDomain });
-      }
-    });
+    // sampleSites.forEach(siteUrl => {
+    //   const siteDomain = getDomainFromUrl(siteUrl);
+    //   if (!records.some(record => record.domain === siteDomain)) {
+    //     records.push({ domain: siteDomain });
+    //   }
+    // });
 
     // Kayıtları local storage'a kaydet
-    localStorage.setItem('siteRecords', JSON.stringify(records));
+    localStorage.setItem('siteRecords_' + tabParam, JSON.stringify(records));
 
     // Site kayıtlarını yeniden yükle
     loadSiteRecords();
   }
+});
+
+document.getElementById('saveButton').addEventListener('click', function() {
+  saveSite();
+});
+document.getElementById('deleteAll').addEventListener('click', function() {
+  deleteAll();
+});
+
+document.getElementById('previousButton').addEventListener('click', function() {
+  changePage(-1);
+});
+
+document.getElementById('nextButton').addEventListener('click', function() {
+  changePage(1);
 });

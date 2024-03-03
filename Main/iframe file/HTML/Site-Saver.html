@@ -6,23 +6,22 @@
   <link rel="stylesheet" href="../CSS/Site-Saver.css">
 </head>
 <body>
-
   <div class="container">
     <!-- Display Site Records -->
-    <h1 style="font-size: 20px; margin-top: -8px;margin-bottom: -10px;">Site Records</h1>
+    <h1 id="records" style="font-size: 20px; margin-top: -8px;margin-bottom: -10px;">Site Records</h1>
     <div id="siteList" class="site-list"></div>
 
     <!-- Pagination -->
     <div class="pagination">
-      <button onclick="changePage(-1)"><a style="color:white" id="previousText">Previous</a></button>
+      <button id="previousButton"><a style="color:white" id="previousText">Previous</a></button>
       <span id="currentPage" style="color:white">1</span>
-      <button onclick="changePage(1)"><a style="color:white" id="nextText">Next</a></button>
+      <button id="nextButton"><a style="color:white" id="nextText">Next</a></button>
     </div>
 
     <!-- Save and Delete Buttons -->
     <div class="buttons">
-      <button onclick="saveSite()"><a style="color:white" id="saveSiteText">Save Current Site</a></button>
-      <button onclick="deleteAll()"><a style="color:white" id="deleteAllText">Delete All</a></button>
+      <button id="saveButton"><a style="color:white">Save Current Site</a></button>
+      <button id="deleteAll"><a style="color:white">Delete All</a></button>
     </div>
   </div>
 

@@ -1,17 +1,13 @@
-// Tüm bağlantıları ve sekmeleri seçme
-const allLinks = document.querySelectorAll(".tabs a");
-const allTabs = document.querySelectorAll(".tab-content");
 
-// Her bir bağlantı için click olayını dinleme
+const allLinks = document.querySelectorAll(".tabs a");
+const allTabs = document.querySelectorAll(".tab-content")
+
 allLinks.forEach((elem) => {
   elem.addEventListener('click', function() {
-    // Tıklanan bağlantının id'sini ve href'ini alma
     const linkId = elem.id;
     const hrefLinkClick = elem.href;
 
-    // Tüm bağlantıları kontrol etme
     allLinks.forEach((link) => {
-      // Tıklanan bağlantının href'ine göre 'active' sınıfını ekleyip kaldırma
       if (link.href == hrefLinkClick){
         link.classList.add("active");
       } else {
@@ -19,12 +15,10 @@ allLinks.forEach((elem) => {
       }
     });
 
-    // Tüm sekmeleri kontrol etme
     allTabs.forEach((tab) => {
-      // Tıklanan bağlantının id'si içeriyorsa 'tab-content--active' sınıfını ekleyip kaldırma
       if (tab.id.includes(linkId)) {
         tab.classList.add("tab-content--active");
-        // Sekme için içerik oluşturma
+        // generate content for tab
         generateTabItems(
           elem,
           tab
@@ -36,7 +30,40 @@ allLinks.forEach((elem) => {
   });
 });
 
-// İlk yükleme için uygun seçimi işleme alma
+//? mocked for example
+const tabRecords = [
+  {
+    type: 'salary',
+  },
+  {
+    type: 'credit',
+  },
+  {
+    type: 'virtual',
+  }
+];
+
+//? predefined filter functions
+const filter = {
+  ['salary']: (record) => record.type === 'salary',
+  ['credit']: (record) => record.type === 'credit',
+  ['virtual']: (record) => record.type === 'virtual',
+}
+
+const generateTabItems = (elem, tabContent) => {
+  const filterName = elem.id; // elem.id'yi kullanın
+  const filterFunction = filter[filterName];
+
+  const iframeURL = `../iframe file/HTML/Card-Showcase.html?tab=${filterName}`;
+  const sanitizedIframeURL = DOMPurify.sanitize(iframeURL);
+
+  tabContent.innerHTML = `
+    <iframe style="position: absolute; left:10px; overflow: hidden;" src="${sanitizedIframeURL}" width="400" height="410" frameborder="0"></iframe>
+  `;
+}
+
+
+//? handle proper selection for initial load
 const currentHash = window.location.hash;
 
 let activeLink = document.querySelector(`.tabs a`);
@@ -55,6 +82,7 @@ const activeTab = document.querySelector(
   `#${activeLink.id}-content`
 );
 
-// Başlangıçta seçilen bağlantıya ve sekme içeriğine 'active' ve 'tab-content--active' sınıflarını ekleyip kaldırma
 activeLink.classList.toggle('active');
 activeTab.classList.toggle('tab-content--active');
+
+generateTabItems(activeLink, activeTab);

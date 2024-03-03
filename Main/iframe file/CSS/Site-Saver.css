@@ -6,6 +6,7 @@ body {
   align-items: center;
   justify-content: center;
   left: 250px;
+  overflow: hidden
 }
 
 .container {
@@ -66,3 +67,4 @@ h1 {
 .buttons button:hover {
   background-color: #219651;
 }
+

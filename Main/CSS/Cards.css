@@ -20,6 +20,7 @@
   width: 410px;
   height: 590px;
   margin-top: 51px;
+  border-radius: 16px;
 }
 
 body {
@@ -28,7 +29,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  margin: 0;
+  margin: -20px;
   font-family: 'Red Hat Display';
   background-color: var(--white);
   height: 100vh;

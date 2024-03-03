@@ -4,6 +4,7 @@ const app = Vue.createApp({
   el: "#app",
   
   data() {
+    
     return {
       // Kart verilerini depolamak için boş bir dizi oluşturma
       cards: [],
@@ -68,8 +69,11 @@ const app = Vue.createApp({
         card.visible = card.id === selectedCard.id;
         card.flipped = false;
       });
-
-      window.location.href = "../HTML/Card-Create.html";
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      console.log('help')
+      console.log(tabParam)
+      window.location.href = "../HTML/Card-Create.html?tab=" + tabParam;
     },
 
     // Sonraki kartı gösterme fonksiyonu
@@ -109,11 +113,22 @@ const app = Vue.createApp({
     },
     // Kart detaylarını getirme fonksiyonu
     async getCardDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+
+      console.log(tabParam); // tab parametresini konsola yazdırır
+
+      const blockchainName = `blockchain_${tabParam}`;
+
       let decryptedBlockchain;
-      const storedEncryptedBlockchain = localStorage.getItem('blockchain');
+      
+      const storedEncryptedBlockchain = localStorage.getItem(blockchainName);
+      
+      console.log('Stored Name')
+      console.log(blockchainName)
 
       if (storedEncryptedBlockchain) {
-        const secretKey = document.getElementById("key_input").value.trim();
+        const secretKey = document.getElementById("keyInput").value.trim();
 
         if (secretKey) {
           console.log("Secret Key:", secretKey);
@@ -196,6 +211,13 @@ const app = Vue.createApp({
     this.activeCard = this.cards[this.activeIndex];
   },
 });
+
+
+// URL'den parametreleri al
+
+
+
+
 
 
 app.mount('#app'); // Ensure the app is mounted to the element with #app ID

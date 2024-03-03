@@ -1,4 +1,13 @@
 document.charset = "UTF-8";
+const urlParams = new URLSearchParams(window.location.search);
+const tabParam = urlParams.get('tab');
+console.log(tabParam); // tab parametresini konsola yazdırır
+const blockchainName = `blockchain_${tabParam}`;
+console.log("Active Blockchain: " + blockchainName)
+
+document.querySelector('.card-form__button').addEventListener('click', function() {
+    initializeApp();
+});
 
 function encryptData() {
     // Önce addToBlockchain fonksiyonunu çağır
@@ -20,7 +29,7 @@ function encryptData() {
     console.log("encryptedData: " + encryptedData);
 
     // Kaydedilen şifrelenmiş veriyi yerel depolamaya ekleyin veya başka bir işlem yapın
-    localStorage.setItem('blockchain', encryptedData.toString());
+    localStorage.setItem(blockchainName, encryptedData.toString());
 
     // Display output
     document.getElementById("output").innerHTML = "Encrypted data: " + encryptedData;
@@ -50,8 +59,8 @@ function encryptData() {
 // }
 
 function initializeApp() {
-    const storedEncryptedBlockchain = localStorage.getItem('blockchain');
-    
+    const storedEncryptedBlockchain = localStorage.getItem(blockchainName);
+    console.log(blockchainName)
     if (storedEncryptedBlockchain) {
         // Eğer şifrelenmiş blockchain verisi varsa, anahtar girişi istenir
         const secretKey = document.getElementById("keyInput").value.trim()
@@ -84,7 +93,7 @@ function initializeApp() {
                     
                     // Şifrelenmiş veri tekrar kaydedilir
                     saveEncryptedBlockchain(blockchainInstance, secretKey);
-                    window.location.href = 'Card-Showcase.html'
+                    window.location.href = 'Card-Showcase.html?tab=' + tabParam;
                 } else {
                     console.log("Invalid secret key. Please refresh the page and try again.")
                     alert("Invalid secret key. Please refresh the page and try again.");
@@ -99,8 +108,7 @@ function initializeApp() {
         }
 
     } else {
-        const urlParams = new URLSearchParams(window.location.search);
-        const secretKey = urlParams.get('key');
+        const secretKey = document.getElementById("keyInput").value.trim();
 
         // Check if the key is present
         if (secretKey) {
@@ -113,7 +121,7 @@ function initializeApp() {
             
             // Şifrelenmiş veri tekrar kaydedilir
             saveEncryptedBlockchain(blockchainInstance, secretKey);
-            window.location.href = 'Card-Showcase.html'
+            window.location.href = 'Card-Showcase.html?tab=' + tabParam;
         } else {
             // If the key is not present, handle the situation accordingly
             console.log("Invalid or missing secret key. Please go back to the control page.")
@@ -133,7 +141,7 @@ function initializeApp() {
         }
 }
 function loadCardDetails() {
-    const storedEncryptedBlockchain = localStorage.getItem('blockchain');
+    const storedEncryptedBlockchain = localStorage.getItem(blockchainName);
     
     if (storedEncryptedBlockchain) {
         // Eğer şifrelenmiş blockchain verisi varsa, anahtar girişi istenir
@@ -160,7 +168,6 @@ function loadCardDetails() {
                 if (decryptedBlockchain) {
                     const blockchainInstance = new Blockchain(); // Yeni bir örnek oluşturun
                     blockchainInstance.chain = decryptedBlockchain; // Decrypted blockchain ile güncelleyin
-                    //window.location.href = 'Card-Showcase.html?key=' + secretKey
                 } else {
                     console.log("Invalid secret key. Please refresh the page and try again.")
                     alert("Invalid secret key. Please refresh the page and try again.");
@@ -183,7 +190,6 @@ function loadCardDetails() {
             console.log("Secret Key:", secretKey);
             const blockchainInstance = new Blockchain(); // Yeni bir örnek oluşturun
             saveEncryptedBlockchain(blockchainInstance, secretKey);
-            //window.location.href = 'Card-Showcase.html?key=' + secretKey
         } else {
             // If the key is not present, handle the situation accordingly
             console.log("Invalid or missing secret key. Please go back to the control page.")
@@ -214,7 +220,7 @@ function saveEncryptedBlockchain(blockchain, secretKey) {
     });
     
     // encryptedData'nın bir dize olarak saklandığından emin olun
-    localStorage.setItem('blockchain', encryptedData.toString());
+    localStorage.setItem(blockchainName, encryptedData.toString());
 }
 
 
@@ -251,31 +257,6 @@ function addCreditCardToBlockchain(blockchain) {
         0
     ));
 }
-
-// function loadblockchain(storedChain) {
-//     const serializedChain = JSON.parse(storedChain);
-//     const blockchain = new Blockchain();
-
-//     serializedChain.forEach(serializedBlock => {
-//         const block = blockchain.getBlockByHash(serializedBlock.hash);
-//         if (!block) {
-//             const newBlock = new Block(
-//                 serializedBlock.index,
-//                 serializedBlock.previousHash,
-//                 serializedBlock.data,
-//                 serializedBlock.timestamp,
-//                 serializedBlock.nonce
-//             );
-//             newBlock.hash = serializedBlock.hash;
-//             blockchain.chain.push(newBlock);
-//         }
-//     });
-
-//     // Update the current instance's chain
-//     this.chain = blockchain.chain;
-//     console.log("Loaded file.")
-//     console.log(this.chain)
-// }
 
 // Program başlangıcında initializeApp fonksiyonu çağrılır
 function addToBlockchain() {
@@ -360,7 +341,7 @@ let globalChain;
 
 // Blockchain class
 function Blockchain(secretKey = document.getElementById("key_input").value.trim()) {
-    const storedChain = localStorage.getItem('blockchain');
+    const storedChain = localStorage.getItem(blockchainName);
     console.log(storedChain)
     
     if (storedChain){;
@@ -441,7 +422,7 @@ Blockchain.prototype.getBlockByHash = function (targetHash) {
 
 // Save blockchain to a file
 Blockchain.prototype.saveToLocalStorage = function () {
-    localStorage.setItem('blockchain', JSON.stringify(this.chain));
+    localStorage.setItem(blockchainName, JSON.stringify(this.chain));
     console.log(blockchain)
     console.log(JSON.stringify(this.chain))
 };

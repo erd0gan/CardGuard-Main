@@ -44,7 +44,7 @@ new Chart(ctx, {
       },
       title: {
         display: true,
-        text: "Sites You Are Protected in the 2023", // Grafik başlığı
+        text: "2023 Yılında Korunduğunuz Site Sayısı", // Grafik başlığı
         padding: {
           bottom: 16,
         },

@@ -2,6 +2,7 @@
 html {
 	font-size: 16px;
 	font-family: "Poppins";
+  overflow: scroll;
 }
 
 
@@ -94,21 +95,23 @@ summary:hover .expand-icon {
   --gray-hover: rgb(0, 0, 0);
   --primary-blue: #000000;
   --blue-gray: rgb(0, 0, 0);
-  width: 420;
-  height: 600;
-
+  width: 420px;
+  height: 600px;
+  overflow: hidden;
+  overflow-y: hidden;
 }
 
 .container {
-padding: 20px;
-margin: -90px;
+  padding: 20px;
+  margin: -90px;
   min-width: 320px;
   max-width: 420px;
   width: 100%;
   min-height: 600px;
-border-radius: 16px;
+  border-radius: 0px;
   background-color: var(--background);
-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;	
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin-top: -115px;
 }
 
 .container-top-ten {
@@ -261,8 +264,11 @@ header {
 
 :root {
   --clr: #1b1b1b;
-  width: 420;
-  height: 600;
+  width: 420px;
+  height: 600px;
+  overflow: hidden;
+  overflow-y: hidden;
+
 }
 
 body {
@@ -270,7 +276,9 @@ body {
   justify-content: center;
   align-items: center;
   background: white;
-  min-height: 100vh;
+  height: 600px;
+  overflow: hidden;
+  overflow-y: hidden;
 }
 .navigation {
   width: 420px;
@@ -283,7 +291,7 @@ body {
   z-index: 1;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  top: 495px;
+  top: 485px;
 }
 .navigation ul {
 display: flex;

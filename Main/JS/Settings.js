@@ -35,3 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.setItem('theme', theme);
   });
 });
+
+document.getElementById('language-select').addEventListener('change', function() {
+  changeLanguage(this.value);
+});

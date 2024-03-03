@@ -1,28 +1,28 @@
-// Tüm sekme bağlantılarını ve sekme içeriklerini seçme
-const allLinks = document.querySelectorAll(".tabs a");
-const allTabs = document.querySelectorAll(".tab-content");
 
-// Her bir sekme bağlantısı için tıklama olayını dinleme
+const allLinks = document.querySelectorAll(".tabs a");
+const allTabs = document.querySelectorAll(".tab-content")
+
 allLinks.forEach((elem) => {
-  elem.addEventListener('click', function () {
+  elem.addEventListener('click', function() {
     const linkId = elem.id;
     const hrefLinkClick = elem.href;
 
-    // Tüm bağlantıları kontrol et
     allLinks.forEach((link) => {
-      if (link.href == hrefLinkClick) {
+      if (link.href == hrefLinkClick){
         link.classList.add("active");
       } else {
         link.classList.remove('active');
       }
     });
 
-    // Tüm sekme içeriklerini kontrol et
     allTabs.forEach((tab) => {
       if (tab.id.includes(linkId)) {
         tab.classList.add("tab-content--active");
-        // Sekme için içerik oluştur
-        generateTabItems(elem, tab);
+        // generate content for tab
+        generateTabItems(
+          elem,
+          tab
+        );    
       } else {
         tab.classList.remove('tab-content--active');
       }
@@ -30,84 +30,60 @@ allLinks.forEach((elem) => {
   });
 });
 
-// Sekme içeriğini oluşturmak için fonksiyon
-const generateTabItems = (elem, tabContent) => {
-  const filterName = elem.name;
-
-  // Filtre değişkeninin tanımlı olup olmadığını kontrol et
-  if (typeof filter !== 'undefined' && filter[filterName]) {
-    const filterFunction = filter[filterName];
-    const mappedRecords = tabRecords.filter(filterFunction);
-    tabContent.innerHTML = mappedRecords.join('');
-  } else {
-    console.error("Filter function is not defined.");
+//? mocked for example
+const tabRecords = [
+  {
+    type: 'safe',
+  },
+  {
+    type: 'suspicious',
+  },
+  {
+    type: 'malicious',
   }
-};
+];
 
-// Sayfa yüklendiğinde doğru seçimi ele alma
+//? predefined filter functions
+const filter = {
+  ['safe']: (record) => record.type === 'safe',
+  ['suspicious']: (record) => record.type === 'suspicious',
+  ['malicious']: (record) => record.type === 'malicious',
+}
+
+const generateTabItems = (elem, tabContent) => {
+  const filterName = elem.id; // elem.id'yi kullanın
+  const filterFunction = filter[filterName];
+  
+  const iframeURL = `../iframe file/HTML/Site-Saver.html?tab=${filterName}`;
+  const sanitizedIframeURL = DOMPurify.sanitize(iframeURL);
+  console.log(iframeURL)
+  tabContent.innerHTML = `
+    <iframe style="position: absolute; left:10px; overflow: hidden;" src="${sanitizedIframeURL}" width="400" height="410" frameborder="0"></iframe>
+  `;
+}
+
+
+//? handle proper selection for initial load
 const currentHash = window.location.hash;
-let activeLink = document.querySelector('.tabs a');
+
+let activeLink = document.querySelector(`.tabs a`);
 
 if (currentHash) {
-  const visibleHash = document.getElementById(currentHash.substring(1)); // '#' karakterini kaldır
+  const visibleHash = document.getElementById(
+    `${currentHash}`
+  );
 
   if (visibleHash) {
     activeLink = visibleHash;
   }
 }
 
-// activeLink varsa devam etmeden önce kontrol etme
-if (activeLink) {
-  const activeTab = document.querySelector(`#${activeLink.id}-content`);
+const activeTab = document.querySelector(
+  `#${activeLink.id}-content`
+);
 
-  activeLink.classList.add('active');
-  activeTab.classList.add('tab-content--active');
+activeLink.classList.toggle('active');
+activeTab.classList.toggle('tab-content--active');
 
-  generateTabItems(activeLink, activeTab);
-}
+generateTabItems(activeLink, activeTab);
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Sayfanın başlangıcını başlat ve site kayıtlarını yükle
-  let currentPage = 1;
-  loadSiteRecords();
-
-  // Geçerli site URL'sini kaydetme fonksiyonu
-  window.saveSite = function () {
-    const siteUrl = window.location.href;
-    const records = JSON.parse(localStorage.getItem('siteRecords')) || [];
-    records.push({ url: siteUrl });
-    localStorage.setItem('siteRecords', JSON.stringify(records));
-    loadSiteRecords();
-  };
-
-  // Tüm site kayıtlarını silme fonksiyonu
-  window.deleteAll = function () {
-    localStorage.removeItem('siteRecords');
-    loadSiteRecords();
-  };
-
-  // Site kayıtlarını yükleme ve görüntüleme fonksiyonu
-  function loadSiteRecords() {
-    const siteList = document.getElementById('siteList');
-    const records = JSON.parse(localStorage.getItem('siteRecords')) || [];
-    const currentPage = 1;
-    const startIndex = (currentPage - 1) * 5;
-    const endIndex = startIndex + 5;
-
-    // siteList.innerHTML = '<h1>Site Records</h1>';
-    const currentPageRecords = records.slice(startIndex, endIndex);
-    currentPageRecords.forEach((record) => {
-      const recordElement = document.createElement('div');
-      recordElement.textContent = record.url;
-      siteList.appendChild(recordElement);
-    });
-
-    document.getElementById('currentPage').textContent = currentPage;
-  }
-
-  // Geçerli sayfayı değiştirme fonksiyonu
-  window.changePage = function (delta) {
-    const currentPage = Math.max(1, currentPage + delta);
-    loadSiteRecords();
-  };
-});

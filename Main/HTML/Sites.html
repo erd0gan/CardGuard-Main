@@ -12,6 +12,7 @@
       type='text/css'
   >
   <link rel="stylesheet" type="text/css" href="../CSS/Sites.css">
+  <script src="../dist/purify.min.js"></script>
 </head>
 <body>
   
@@ -26,22 +27,26 @@
     </div>
     <header>
       <div class="tabs">
-        <a id="tab1" name="saved" href="#tab1">
+        <a id="safe" name="safe" href="#tab1">
           <span id="sitetab1Text">Safe</span>
         </a>
-        <a id="tab2" name="non-saved" href="#tab2">
+        <a id="suspicious" name="suspicious" href="#tab2">
           <span id="sitetab2Text">Suspicious</span>
         </a>
-        <a id="tab3" name="non-saved" href="#tab3">
+        <a id="malicious" name="malicious" href="#tab3">
           <span id="sitetab3Text">Malicious</span>
         </a>
       </div>
     </header>
     <div class="tab-content-wrapper">
-      <div id="tab1-content" class="tab-content">
-        <iframe style="position: absolute; overflow: hidden;" src="../iframe file/HTML/Site-Saver.html" width="400" height="395" frameborder="0"></iframe>
+      <div id="safe-content" class="tab-content">
+          
       </div>
-      <div id="tab2-content" class="tab-content">
+      <div id="suspicious-content" class="tab-content">
+        
+      </div>
+      <div id="malicious-content" class="tab-content">
+        
       </div>
     </div>
   </div>

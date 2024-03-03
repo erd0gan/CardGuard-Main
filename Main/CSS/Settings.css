@@ -1,9 +1,11 @@
-
+html, body {
+  overflow: hidden;
+}
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 * {
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
   box-sizing: border-box;
 }
 
@@ -16,8 +18,8 @@ body {
   align-items: center;
   flex-direction: column;
   text-align: center;
-  min-height: 100vh;
-  margin: 0;
+  min-height: 600px;
+  margin: 0px;
   transition: background 0.2s linear;
 }
 body {
@@ -25,7 +27,7 @@ body {
     color: #000;
   }
   
-  h4, h2, a[href="/Main/HTML/SSS.html"], .support a {
+  container-top-ten, h4, h2, a[href="/Main/HTML/SSS.html"], .support a {
     color: #000;
   }
   
@@ -36,9 +38,11 @@ body {
   body.dark h4,
   body.dark h2,
   body.dark a[href="/Main/HTML/SSS.html"],
+  body.dark container-top-ten
   body.dark .support a {
     color: #fff;
   }
+
   
 
 
@@ -89,6 +93,8 @@ body {
 }
 :root {
   --clr: #1b1b1b;
+  width: 420px;
+  height: 600px;
 }
 body {
   display: flex;
@@ -107,7 +113,7 @@ body {
   z-index: 1;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  top: 235px;
+  top: 270px;
   left: -20px;
 }
 .navigation ul {
@@ -224,6 +230,8 @@ body {
   --gray-hover: rgb(0, 0, 0);
   --primary-blue: #000000;
   --blue-gray: rgb(0, 0, 0);
+  overflow: hidden;
+
 }
 
 body {
