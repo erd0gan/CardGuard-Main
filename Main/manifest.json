@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "CardGuard",
-    "version": "1.1.0",
+    "version": "3.1.5",
     "description": "Online Alışverişlerde Yüksek Güvenlik - Kart Şifreleme ve Yapay Zekâlı Site Kontrolü",
     "browser_action": {
       "default_popup": "HTML/Home.html",

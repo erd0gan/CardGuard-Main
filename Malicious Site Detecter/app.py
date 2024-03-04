@@ -486,13 +486,12 @@ def get_csv_version_for_gemini(data):
 # Elde edilen verileri k-NN sınıflandırması ile k-NN değerini hesaplayan fonksiyon
 def get_knn_result(df):
     path = os.path.join(os.getcwd(), 'num_model.h5')
-
+    
     # Önceden eğitilmiş TensorFlow modelini yükle
     model = tf.keras.models.load_model(
         path, 
         custom_objects=None, 
-        compile=True, 
-        options=None
+        compile=True
     )
     predictions = [] # Tahmin sonuçlarını depolamak için bir liste
 
@@ -638,8 +637,6 @@ def get_gemini_result_for_domain(url, ge_key):
     return response.text
 
 
-# Account-1: eserdar242@gmail.com:P4ssw@rd | adambecker006@proton.me:P4ssw@rd123456.
-
 
 def start(target_url):
     # API anahtarlarını ve proxy'yi tanımla
@@ -648,6 +645,8 @@ def start(target_url):
     cp_key = 'ENTER_CHECKPHISH_AI_API_KEY'
     av_key = 'ENTER_APIVOID_API_KEY' 
     proxy = 'ENTER_PROXY'
+
+
 
     # Domain'i çıkarmak için regex paterni
     domain_pattern = r'https?:\/\/(?:www\.)?([^\/]+)'
@@ -688,9 +687,6 @@ def start(target_url):
 
     print(f'''Target URL => {target_url} | Total Elapsed Time => {elapsed_time}''')
 
-    # Toplam sonuçları dosyaya kaydet
-    save_data(overall_result)
-
     # CSV formatına dönüştürülmüş veriyi elde et
     df = get_csv_version(overall_result)
 
@@ -709,6 +705,14 @@ def start(target_url):
     # Gemini AI'den domain sonuçlarını al
     ai_domain_result = get_gemini_result_for_domain(target_url, ge_key)
     print('Gemini Domain Data:', ai_domain_result)
+
+    # Elde edilen yapay zekâ sonuçlarını da tüm verilere ekle
+    overall_result['ai_result'] = ai_result
+    overall_result['ai_domain_result'] = ai_domain_result
+
+    # Toplam sonuçları dosyaya kaydet
+    overall_result['knn_result'] = float(knn_result)
+    save_data(overall_result)
 
     # Sonuçları bir sözlük içinde döndür
     return {'ai_data_result': ai_result, 'ai_domain_result': ai_domain_result}
@@ -742,4 +746,3 @@ def main():
 # Uygulamayı başlat
 if __name__ == '__main__':
     app.run(debug=True)
-

@@ -1,7 +1,7 @@
 document.charset = "UTF-8";
 const urlParams = new URLSearchParams(window.location.search);
 const tabParam = urlParams.get('tab');
-console.log(tabParam);
+console.log(tabParam); // tab parametresini konsola yazdırır
 const blockchainName = `blockchain_${tabParam}`;
 console.log("Active Blockchain: " + blockchainName)
 
@@ -18,8 +18,8 @@ function encryptData() {
     console.log("key_for_hash: " + key_for_hash);
 
     const blockchainData = JSON.stringify(blockchain.chain);
-    const key = CryptoJS.SHA256(key_for_hash).toString();
-    console.log('Hashed Key:' + key)
+    const key = CryptoJS.MD5(key_for_hash).toString();
+
     const encryptedData = CryptoJS.AES.encrypt(blockchainData, key, {
         mode: CryptoJS.mode.CFB,
         padding: CryptoJS.pad.Pkcs7,
@@ -35,6 +35,28 @@ function encryptData() {
     document.getElementById("output").innerHTML = "Encrypted data: " + encryptedData;
 }
 
+// function decryptData(encryptedDataString) {
+//     const key_for_hash = document.getElementById("key_input").value.trim();
+//     //const encryptedDataString = document.getElementById("output").innerText.split(": ")[1].trim();
+
+//     // Generate hashed key
+//     const key = CryptoJS.MD5(key_for_hash).toString();
+//     console.log("key: " + key);
+
+//     // Decrypt data using AES-CFB with PKCS#7 padding
+//     const decryptedData = CryptoJS.AES.decrypt(encryptedDataString, key, {
+//         mode: CryptoJS.mode.CFB,
+//         padding: CryptoJS.pad.Pkcs7,
+//     });
+//     console.log("decryptedData: " + decryptedData);
+
+//     // Convert decrypted data to string
+//     const decryptedString = CryptoJS.enc.Utf8.stringify(decryptedData);
+//     console.log("decryptedString: " + decryptedString);
+
+//     // Display output
+//     document.getElementById("output").innerHTML = "Decrypted data: " + decryptedString;
+// }
 
 function initializeApp() {
     const storedEncryptedBlockchain = localStorage.getItem(blockchainName);
@@ -116,9 +138,8 @@ function initializeApp() {
             console.log("Secret key is required. Please refresh the page and try again.")
             alert("Secret key is required. Please refresh the page and try again.");
         }
-    }
+        }
 }
-
 function loadCardDetails() {
     const storedEncryptedBlockchain = localStorage.getItem(blockchainName);
     
@@ -190,7 +211,7 @@ function loadCardDetails() {
 // Şifrelenmiş blockchain verisini kaydeden fonksiyon
 function saveEncryptedBlockchain(blockchain, secretKey) {
     const blockchainData = JSON.stringify(blockchain.chain);
-    const key = CryptoJS.SHA256(secretKey).toString();
+    const key = CryptoJS.MD5(secretKey).toString();
     
     const encryptedData = CryptoJS.AES.encrypt(blockchainData, key, {
         mode: CryptoJS.mode.CFB,
@@ -201,7 +222,6 @@ function saveEncryptedBlockchain(blockchain, secretKey) {
     // encryptedData'nın bir dize olarak saklandığından emin olun
     localStorage.setItem(blockchainName, encryptedData.toString());
 }
-
 
 
 function base64encode(str) {
@@ -281,7 +301,7 @@ function Block(index, previousHash, data, timestamp, nonce) {
 
 // Calculate hash function
 Block.prototype.calculateHash = function () {
-    return CryptoJS.SHA256(
+    return CryptoJS.MD5(
         this.index +
         this.previousHash +
         this.data +
@@ -293,8 +313,7 @@ Block.prototype.calculateHash = function () {
 
 function decryptBlockchain(encryptedData, secretKey) {
     try {
-        const key = CryptoJS.SHA256(secretKey).toString();
-        console.log('Hashed Key:' + key)
+        const key = CryptoJS.MD5(secretKey).toString();
         const decryptedData = CryptoJS.AES.decrypt(encryptedData, key, {
             mode: CryptoJS.mode.CFB,
             padding: CryptoJS.pad.Pkcs7,

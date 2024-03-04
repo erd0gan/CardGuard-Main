@@ -106,15 +106,16 @@ body {
 .navigation {
   width: 420px;
   height: 70px;
+  position: fixed;
   background: #4d4e4e;
-  position: relative;
+
   display: flex;
   justify-content: center;
   z-index: 1;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  top: 270px;
-  left: -20px;
+  top: 530px;
+  left: 0px;
 }
 .navigation ul {
   display: flex;
@@ -253,16 +254,16 @@ body {
   border-radius: 16px;
   background-color: var();
   box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 0px 4px;	
-  }
+}
   
-  .container-top-ten {
+.container-top-ten {
     display: flex;
     justify-content: start;
     align-items: center;
     gap: 8px;
     margin-bottom: 16px;
     color: var(--blue-gray);
-  }
+}
 
 header {
   position: relative;
